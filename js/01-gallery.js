@@ -20,41 +20,30 @@ gallery.addEventListener('click', onClickDeleg)
 
 function onClickDeleg(evt) {
     evt.preventDefault();
-  if (!evt.target.nodeName==='IMG') { 
+  if (!evt.target.classList.contains('gallery__image')) { 
    return
   }
-     const largeImageUrl = evt.target.dataset.source;
-    // Здесь вы можете открыть модальное окно с большим изображением,
-    // используя largeImageUrl и библиотеку basicLightbox или другие методы.
-    console.log('Кликнули на изображение с большим изображением:', largeImageUrl);
- }
+  createModalWindow(evt);  
+}
+ 
+function createModalWindow(evt) {
+    const instance = basicLightbox.create(`<img src="${evt.target.dataset.source}">`, {
+        onShow: () => {
+            addEventListener('keydown', onEscapePress);
+        },
+         onClose: () => {
+        removeEventListener("keydown", onEscapePress);
+      },
+    });
+
+    function onEscapePress(evt) {
+        if (evt.code === 'Escape') {
+            instance.close();
+        }
+    }
+    instance.show();
+}
 
 
 
 
-
-// gallery.addEventListener('click', e => {
-//     e.preventDefault();
-
-//     const imageElem = e.target.classList.contains('gallery__image');
-//     if (!imageElem) return;
-//     createModalWindow(e);
-// });
-
-// function createModalWindow(e) {
-//     const instance = basicLightbox.create(`<img src="${e.target.dataset.source}">`, {
-//         onShow: () => {
-//             addEventListener('keydown', onEscapePress);
-//         },
-//          onClose: () => {
-//         removeEventListener("keydown", onEscapePress);
-//       },
-//     });
-
-//     function onEscapePress(e) {
-//         if (e.code === 'Escape') {
-//             instance.close();
-//         }
-//     }
-//     instance.show();
-// }
