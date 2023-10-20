@@ -10,8 +10,8 @@ const galleryItemsLight = galleryItems
     })
     .join('');
 
-gallery.innerHTML = galleryItemsLight;
-
+gallery.insertAdjacentHTML('beforeend', galleryItemsLight)
+    
 const lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionDelay: 250,
